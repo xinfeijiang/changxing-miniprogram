@@ -1,0 +1,178 @@
+<!-- 首页 - Stitch 风格 -->
+<view class="home">
+  <!-- 顶部搜索 -->
+  <view class="home-header">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input 
+        class="search-input" 
+        placeholder="搜索感兴趣的活动..." 
+        placeholder-class="search-placeholder"
+        value="{{searchKeyword}}"
+        bindinput="onSearchInput"
+        bindconfirm="onSearch"
+      />
+      <view class="search-btn" bindtap="onSearch">搜索</view>
+    </view>
+    
+    <!-- 标签 -->
+    <scroll-view class="tag-scroll" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+      <view class="tags">
+        <view 
+          wx:for="{{tags}}" 
+          wx:key="id" 
+          class="tag {{item.active ? 'tag-active' : ''}}"
+          bindtap="onTagSelect"
+          data-id="{{item.id}}"
+        >
+          {{item.name}}
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <!-- 内容区域 -->
+  <scroll-view 
+    class="home-content" 
+    scroll-y="{{true}}"
+    bindscrolltolower="onReachBottom"
+  >
+    <!-- 加载中 -->
+    <view wx:if="{{loading}}" class="loading">
+      <view class="loading-spinner"></view>
+    </view>
+    
+    <block wx:else>
+      <!-- 热门活动 -->
+      <view wx:if="{{hotActivities.length > 0}}" class="section">
+        <view class="section-header">
+          <view class="section-title">🔥 热门活动</view>
+          <view class="section-more">查看全部 →</view>
+        </view>
+        <scroll-view class="hot-scroll" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+          <view class="hot-list">
+            <view 
+              wx:for="{{hotActivities}}" 
+              wx:key="id" 
+              class="hot-card card-hover"
+              bindtap="goToDetail"
+              data-id="{{item.id}}"
+            >
+              <image class="hot-cover" src="{{item.cover}}" mode="aspectFill" />
+              <view class="hot-info">
+                <view class="hot-title">{{item.title}}</view>
+                <view class="hot-meta">
+                  <text class="hot-time">🕐 {{item.startTime}}</text>
+                  <text class="hot-spots">📍 {{item.spotsLeft}}/{{item.totalSpots}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+      
+      <!-- 即将开始 -->
+      <view wx:if="{{upcomingActivities.length > 0}}" class="section">
+        <view class="section-header">
+          <view class="section-title">⏰ 即将开始</view>
+        </view>
+        <view class="activity-list">
+          <view 
+            wx:for="{{upcomingActivities}}" 
+            wx:key="id" 
+            class="activity-card card card-hover"
+            bindtap="goToDetail"
+            data-id="{{item.id}}"
+          >
+            <image class="activity-cover" src="{{item.cover}}" mode="aspectFill" />
+            <view class="activity-info">
+              <view class="activity-title">{{item.title}}</view>
+              <view class="activity-desc">{{item.description}}</view>
+              <view class="activity-meta">
+                <view class="meta-item">
+                  <text class="meta-icon">📅</text>
+                  <text>{{item.startTime}}</text>
+                </view>
+                <view class="meta-item">
+                  <text class="meta-icon">📍</text>
+                  <text>{{item.location}}</text>
+                </view>
+              </view>
+              <view class="activity-footer">
+                <view class="spots">
+                  <text class="spots-num">{{item.spotsLeft}}</text>
+                  <text class="spots-text">/ {{item.totalSpots}} 名额</text>
+                </view>
+                <view wx:if="{{item.price > 0}}" class="price">
+                  <text class="price-symbol">¥</text>
+                  <text class="price-num">{{item.price}}</text>
+                </view>
+                <view wx:else class="price-free">免费</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 全部活动 -->
+      <view class="section">
+        <view class="section-header">
+          <view class="section-title">📋 全部活动</view>
+        </view>
+        <view class="activity-list">
+          <view 
+            wx:for="{{allActivities}}" 
+            wx:key="id" 
+            class="activity-card card card-hover"
+            bindtap="goToDetail"
+            data-id="{{item.id}}"
+          >
+            <image class="activity-cover" src="{{item.cover}}" mode="aspectFill" />
+            <view class="activity-info">
+              <view class="activity-title">{{item.title}}</view>
+              <view class="activity-desc">{{item.description}}</view>
+              <view class="activity-meta">
+                <view class="meta-item">
+                  <text class="meta-icon">📅</text>
+                  <text>{{item.startTime}}</text>
+                </view>
+                <view class="meta-item">
+                  <text class="meta-icon">📍</text>
+                  <text>{{item.location}}</text>
+                </view>
+              </view>
+              <view class="activity-footer">
+                <view class="spots">
+                  <text class="spots-num">{{item.spotsLeft}}</text>
+                  <text class="spots-text">/ {{item.totalSpots}} 名额</text>
+                </view>
+                <view wx:if="{{item.price > 0}}" class="price">
+                  <text class="price-symbol">¥</text>
+                  <text class="price-num">{{item.price}}</text>
+                </view>
+                <view wx:else class="price-free">免费</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        
+        <!-- 加载更多 -->
+        <view wx:if="{{loadingMore}}" class="loading-more">
+          <view class="loading-spinner"></view>
+          <text>加载中...</text>
+        </view>
+        
+        <!-- 空状态 -->
+        <view wx:if="{{!loading && allActivities.length === 0}}" class="empty">
+          <text class="empty-icon">📭</text>
+          <text class="empty-text">暂无活动</text>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+  
+  <!-- 悬浮按钮 -->
+  <view wx:if="{{userInfo && userInfo.role === 'organizer'}}" class="fab" bindtap="goToCreate">
+    <text class="fab-icon">+</text>
+  </view>
+</view>

@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/activity-detail/activity-detail",
+    "pages/create-activity/create-activity",
+    "pages/registration/registration",
+    "pages/my-registrations/my-registrations",
+    "pages/dashboard/dashboard",
+    "pages/checkin/checkin"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#191A1F",
+    "navigationBarTitleText": "畅行活动",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#191A1F"
+  },
+  "tabBar": {
+    "color": "#9AA0A6",
+    "selectedColor": "#8AB4F8",
+    "backgroundColor": "#24262E",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/my-registrations/my-registrations",
+        "text": "我的报名",
+        "iconPath": "assets/icons/ticket.png",
+        "selectedIconPath": "assets/icons/ticket-active.png"
+      },
+      {
+        "pagePath": "pages/dashboard/dashboard",
+        "text": "管理",
+        "iconPath": "assets/icons/dashboard.png",
+        "selectedIconPath": "assets/icons/dashboard-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}
