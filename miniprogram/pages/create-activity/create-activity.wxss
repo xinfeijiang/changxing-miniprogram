@@ -1,0 +1,105 @@
+/* 创建活动 - Stitch 风格 */
+.create-activity {
+  min-height: 100vh;
+  background: var(--stitch-bg);
+}
+
+.form-scroll {
+  height: 100vh;
+  padding: 24rpx;
+}
+
+.section {
+  margin-bottom: 40rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--stitch-text-primary);
+  margin-bottom: 24rpx;
+  padding-left: 8rpx;
+  border-left: 4rpx solid var(--stitch-primary);
+}
+
+.form-item {
+  margin-bottom: 24rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: var(--stitch-text-secondary);
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.required {
+  color: var(--stitch-error);
+  margin-left: 4rpx;
+}
+
+.textarea {
+  min-height: 200rpx;
+  padding: 20rpx;
+}
+
+.picker-input {
+  display: flex;
+  align-items: center;
+}
+
+.picker-input.placeholder {
+  color: var(--stitch-text-disabled);
+}
+
+/* 封面 */
+.cover-upload {
+  width: 100%;
+  height: 320rpx;
+  background: var(--stitch-card);
+  border: 1px dashed var(--stitch-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.cover-preview {
+  width: 100%;
+  height: 100%;
+}
+
+.cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  color: var(--stitch-text-secondary);
+}
+
+.cover-icon {
+  font-size: 64rpx;
+}
+
+/* 开关 */
+.switch-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx;
+  background: var(--stitch-card);
+  border: 1px solid var(--stitch-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 16rpx;
+}
+
+.switch-label {
+  font-size: 28rpx;
+  color: var(--stitch-text-primary);
+}
+
+/* 提交 */
+.submit-section {
+  padding: 24rpx 0 48rpx;
+}

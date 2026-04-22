@@ -1,0 +1,305 @@
+/* 活动详情 - Stitch 风格 */
+.activity-detail {
+  min-height: 100vh;
+  background: var(--stitch-bg);
+  padding-bottom: 140rpx;
+}
+
+/* 封面 */
+.cover-section {
+  position: relative;
+  width: 100%;
+  height: 480rpx;
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  background: var(--stitch-card);
+}
+
+.cover-gradient {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200rpx;
+  background: linear-gradient(transparent, var(--stitch-bg));
+}
+
+/* 信息区 */
+.info-section {
+  padding: 0 32rpx;
+  margin-top: -60rpx;
+  position: relative;
+  z-index: 1;
+}
+
+.activity-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: var(--stitch-text-primary);
+  line-height: 1.3;
+  margin-bottom: 20rpx;
+}
+
+.activity-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.tag {
+  padding: 8rpx 20rpx;
+  background: rgba(138, 180, 248, 0.1);
+  border: 1px solid rgba(138, 180, 248, 0.2);
+  border-radius: 20rpx;
+  color: var(--stitch-primary);
+  font-size: 22rpx;
+}
+
+.status-badges {
+  display: flex;
+  gap: 12rpx;
+}
+
+/* Section */
+.section {
+  margin: 24rpx 32rpx;
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--stitch-text-secondary);
+  margin-bottom: 20rpx;
+}
+
+/* 时间 */
+.time-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 16rpx 0;
+  border-bottom: 1px solid var(--stitch-border);
+}
+
+.time-item:last-child {
+  border-bottom: none;
+}
+
+.time-label {
+  color: var(--stitch-text-secondary);
+  font-size: 26rpx;
+}
+
+.time-value {
+  color: var(--stitch-text-primary);
+  font-size: 26rpx;
+}
+
+.text-warning {
+  color: var(--stitch-warning);
+}
+
+/* 地点 */
+.location-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.location-name {
+  font-size: 28rpx;
+  color: var(--stitch-text-primary);
+}
+
+.location-address {
+  font-size: 24rpx;
+  color: var(--stitch-text-secondary);
+}
+
+/* 统计 */
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-value {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--stitch-text-primary);
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: var(--stitch-text-secondary);
+}
+
+.text-accent {
+  color: var(--stitch-primary);
+}
+
+.text-success {
+  color: var(--stitch-success);
+}
+
+/* 主办方 */
+.organizer-info {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.organizer-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: var(--stitch-hover);
+}
+
+.organizer-name {
+  font-size: 28rpx;
+  color: var(--stitch-text-primary);
+}
+
+/* 详情 */
+.description {
+  font-size: 28rpx;
+  color: var(--stitch-text-secondary);
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+/* 表单 */
+.form-section {
+  margin: 24rpx 32rpx;
+  padding: 32rpx;
+  background: var(--stitch-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--stitch-border);
+}
+
+.form-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--stitch-text-primary);
+  margin-bottom: 32rpx;
+}
+
+.form-item {
+  margin-bottom: 24rpx;
+}
+
+.form-label {
+  font-size: 26rpx;
+  color: var(--stitch-text-secondary);
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.required {
+  color: var(--stitch-error);
+  margin-left: 4rpx;
+}
+
+.textarea {
+  min-height: 160rpx;
+  padding: 20rpx;
+}
+
+.picker-input {
+  display: flex;
+  align-items: center;
+  color: var(--stitch-text-primary);
+}
+
+/* 已报名 */
+.registered-section {
+  margin: 24rpx 32rpx;
+}
+
+.registered-card {
+  background: var(--stitch-card);
+  border: 1px solid var(--stitch-success);
+  border-radius: var(--radius-lg);
+  padding: 32rpx;
+}
+
+.registered-status {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.status-icon {
+  width: 48rpx;
+  height: 48rpx;
+  background: var(--stitch-success);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #191A1F;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.status-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--stitch-success);
+}
+
+.registered-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: var(--stitch-text-secondary);
+}
+
+.info-value {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.status-pending {
+  color: var(--stitch-warning);
+}
+
+.status-confirmed {
+  color: var(--stitch-success);
+}
+
+.registered-actions {
+  display: flex;
+  gap: 16rpx;
+}
+
+.registered-actions .btn {
+  flex: 1;
+}
+
+/* 底部 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24rpx 32rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  background: var(--stitch-bg);
+  border-top: 1px solid var(--stitch-border);
+}

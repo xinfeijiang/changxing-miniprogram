@@ -1,0 +1,226 @@
+<!-- 活动详情 - Stitch 风格 -->
+<view class="activity-detail">
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">
+    <view class="loading-spinner"></view>
+  </view>
+  
+  <block wx:else>
+    <!-- 封面图 -->
+    <view class="cover-section" wx:if="{{activity.cover}}">
+      <image 
+        class="cover-image" 
+        src="{{activity.cover}}" 
+        mode="aspectFill"
+        bindtap="previewCover"
+      />
+      <view class="cover-gradient"></view>
+    </view>
+    
+    <!-- 基本信息 -->
+    <view class="info-section">
+      <view class="activity-title">{{activity.title}}</view>
+      
+      <view class="activity-tags">
+        <view class="tag">{{activity.category}}</view>
+        <view wx:for="{{activity.tags}}" wx:key="index" class="tag">{{item}}</view>
+      </view>
+      
+      <!-- 状态标签 -->
+      <view class="status-badges">
+        <view wx:if="{{activity.spotsLeft <= 10 && activity.spotsLeft > 0}}" class="badge badge-warning">
+          仅剩 {{activity.spotsLeft}} 名额
+        </view>
+        <view wx:if="{{activity.spotsLeft === 0}}" class="badge badge-error">
+          名额已满
+        </view>
+        <view wx:if="{{activity.price === 0}}" class="badge badge-success">
+          免费
+        </view>
+      </view>
+    </view>
+    
+    <!-- 时间地点 -->
+    <view class="card section">
+      <view class="section-title">📅 时间</view>
+      <view class="time-item">
+        <text class="time-label">开始</text>
+        <text class="time-value">{{activity.startTime}}</text>
+      </view>
+      <view class="time-item">
+        <text class="time-label">结束</text>
+        <text class="time-value">{{activity.endTime}}</text>
+      </view>
+      <view class="time-item">
+        <text class="time-label">报名截止</text>
+        <text class="time-value text-warning">{{activity.registrationDeadline}}</text>
+      </view>
+    </view>
+    
+    <view class="card section">
+      <view class="section-title">📍 地点</view>
+      <view class="location-item">
+        <text class="location-name">{{activity.location}}</text>
+        <text class="location-address" wx:if="{{activity.address}}">{{activity.address}}</text>
+      </view>
+    </view>
+    
+    <!-- 名额与费用 -->
+    <view class="card section">
+      <view class="section-title">📊 报名信息</view>
+      <view class="stats-row">
+        <view class="stat-item">
+          <text class="stat-value">{{activity.totalSpots}}</text>
+          <text class="stat-label">总名额</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value text-accent">{{activity.spotsLeft}}</text>
+          <text class="stat-label">剩余</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value">{{activity.registrationCount}}</text>
+          <text class="stat-label">已报名</text>
+        </view>
+        <view class="stat-item">
+          <text class="stat-value text-success">{{activity.price === 0 ? '免费' : '¥' + activity.price}}</text>
+          <text class="stat-label">费用</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 主办方 -->
+    <view class="card section">
+      <view class="section-title">👤 主办方</view>
+      <view class="organizer-info">
+        <image class="organizer-avatar" src="{{activity.organizer.avatar || '/assets/images/default-avatar.png'}}" />
+        <text class="organizer-name">{{activity.organizer.nickname}}</text>
+      </view>
+    </view>
+    
+    <!-- 活动详情 -->
+    <view class="card section">
+      <view class="section-title">📝 详情</view>
+      <view class="description">
+        <text>{{activity.description || '暂无详细介绍'}}</text>
+      </view>
+    </view>
+    
+    <!-- 报名表单 -->
+    <view wx:if="{{showForm && !registration}}" class="form-section">
+      <view class="form-title">📋 填写报名信息</view>
+      
+      <view wx:for="{{formFields}}" wx:key="name" class="form-item">
+        <view class="form-label">
+          {{item.label}}
+          <text wx:if="{{item.required}}" class="required">*</text>
+        </view>
+        
+        <input
+          wx:if="{{item.type === 'text'}}"
+          class="input"
+          type="text"
+          placeholder="{{item.placeholder || '请输入'}}"
+          value="{{formData[item.name]}}"
+          data-name="{{item.name}}"
+          bindinput="onFieldInput"
+        />
+        
+        <input
+          wx:if="{{item.type === 'number'}}"
+          class="input"
+          type="number"
+          placeholder="{{item.placeholder || '请输入'}}"
+          value="{{formData[item.name]}}"
+          data-name="{{item.name}}"
+          bindinput="onFieldInput"
+        />
+        
+        <input
+          wx:if="{{item.type === 'phone'}}"
+          class="input"
+          type="number"
+          maxlength="11"
+          placeholder="{{item.placeholder || '请输入手机号'}}"
+          value="{{formData[item.name]}}"
+          data-name="{{item.name}}"
+          bindinput="onFieldInput"
+        />
+        
+        <input
+          wx:if="{{item.type === 'email'}}"
+          class="input"
+          type="text"
+          placeholder="{{item.placeholder || '请输入邮箱'}}"
+          value="{{formData[item.name]}}"
+          data-name="{{item.name}}"
+          bindinput="onFieldInput"
+        />
+        
+        <picker
+          wx:if="{{item.type === 'select'}}"
+          mode="selector"
+          range="{{item.options}}"
+          data-name="{{item.name}}"
+          bindchange="onFieldInput"
+        >
+          <view class="input picker-input">
+            {{formData[item.name] || '请选择'}}
+          </view>
+        </picker>
+        
+        <textarea
+          wx:if="{{item.type === 'textarea'}}"
+          class="input textarea"
+          placeholder="{{item.placeholder || '请输入'}}"
+          value="{{formData[item.name]}}"
+          data-name="{{item.name}}"
+          bindinput="onFieldInput"
+        />
+      </view>
+      
+      <button 
+        class="btn btn-primary btn-block btn-lg" 
+        bindtap="submitRegistration"
+        disabled="{{submitting}}"
+      >
+        {{submitting ? '提交中...' : '提交报名'}}
+      </button>
+    </view>
+    
+    <!-- 已报名状态 -->
+    <view wx:if="{{registration}}" class="registered-section">
+      <view class="registered-card">
+        <view class="registered-status">
+          <text class="status-icon">✓</text>
+          <text class="status-text">您已报名</text>
+        </view>
+        <view class="registered-info">
+          <text class="info-label">报名状态：</text>
+          <text class="info-value status-{{registration.status}}">{{registration.status === 'pending' ? '待审核' : registration.status === 'confirmed' ? '已确认' : registration.status}}</text>
+        </view>
+        <view class="registered-actions">
+          <button class="btn btn-secondary" bindtap="goToRegistrationDetail">查看报名</button>
+          <button class="btn btn-outline" bindtap="cancelRegistration">取消报名</button>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 底部操作 -->
+    <view class="bottom-bar">
+      <button 
+        wx:if="{{!registration && activity.spotsLeft > 0}}"
+        class="btn btn-primary btn-block" 
+        bindtap="toggleForm"
+      >
+        {{showForm ? '收起表单' : '立即报名'}}
+      </button>
+      <button 
+        wx:if="{{!registration && activity.spotsLeft === 0}}"
+        class="btn btn-disabled btn-block" 
+        disabled
+      >
+        名额已满
+      </button>
+    </view>
+  </block>
+</view>

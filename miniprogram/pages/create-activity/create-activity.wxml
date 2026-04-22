@@ -1,0 +1,189 @@
+<!-- 创建活动 - Stitch 风格 -->
+<view class="create-activity">
+  <scroll-view class="form-scroll" scroll-y="{{true}}">
+    <!-- 基础信息 -->
+    <view class="section">
+      <view class="section-title">基础信息</view>
+      
+      <view class="form-item">
+        <view class="form-label">活动标题 <text class="required">*</text></view>
+        <input 
+          class="input" 
+          placeholder="请输入活动标题" 
+          value="{{formData.title}}"
+          data-field="title"
+          bindinput="onInput"
+        />
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">活动封面</view>
+        <view class="cover-upload" bindtap="chooseCover">
+          <image wx:if="{{formData.cover}}" src="{{formData.cover}}" mode="aspectFill" class="cover-preview" />
+          <view wx:else class="cover-placeholder">
+            <text class="cover-icon">📷</text>
+            <text>点击上传封面</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">活动分类</view>
+        <picker 
+          mode="selector" 
+          range="{{categories}}" 
+          data-field="category"
+          bindchange="onCategoryChange"
+        >
+          <view class="input picker-input">
+            {{formData.category}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">活动标签（逗号分隔）</view>
+        <input 
+          class="input" 
+          placeholder="如：技术、会议、行业峰会" 
+          value="{{formData.tags}}"
+          data-field="tags"
+          bindinput="onInput"
+        />
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">活动详情</view>
+        <textarea 
+          class="input textarea" 
+          placeholder="请输入活动详细介绍"
+          value="{{formData.description}}"
+          data-field="description"
+          bindinput="onInput"
+        />
+      </view>
+    </view>
+    
+    <!-- 时间设置 -->
+    <view class="section">
+      <view class="section-title">时间设置</view>
+      
+      <view class="form-item">
+        <view class="form-label">开始时间 <text class="required">*</text></view>
+        <picker mode="date" data-field="startTime" bindchange="onTimeChange">
+          <view class="input picker-input {{formData.startTime ? '' : 'placeholder'}}">
+            {{formData.startTime || '请选择'}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">结束时间 <text class="required">*</text></view>
+        <picker mode="date" data-field="endTime" bindchange="onTimeChange">
+          <view class="input picker-input {{formData.endTime ? '' : 'placeholder'}}">
+            {{formData.endTime || '请选择'}}
+          </view>
+        </picker>
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">报名截止 <text class="required">*</text></view>
+        <picker mode="date" data-field="registrationDeadline" bindchange="onTimeChange">
+          <view class="input picker-input {{formData.registrationDeadline ? '' : 'placeholder'}}">
+            {{formData.registrationDeadline || '请选择'}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    
+    <!-- 地点设置 -->
+    <view class="section">
+      <view class="section-title">地点设置</view>
+      
+      <view class="form-item">
+        <view class="form-label">活动地点 <text class="required">*</text></view>
+        <input 
+          class="input" 
+          placeholder="如：XX会议中心" 
+          value="{{formData.location}}"
+          data-field="location"
+          bindinput="onInput"
+        />
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">详细地址</view>
+        <input 
+          class="input" 
+          placeholder="请输入详细地址" 
+          value="{{formData.address}}"
+          data-field="address"
+          bindinput="onInput"
+        />
+      </view>
+    </view>
+    
+    <!-- 名额与费用 -->
+    <view class="section">
+      <view class="section-title">名额与费用</view>
+      
+      <view class="form-item">
+        <view class="form-label">总名额 <text class="required">*</text></view>
+        <input 
+          class="input" 
+          type="number"
+          placeholder="请输入总名额" 
+          value="{{formData.totalSpots}}"
+          data-field="totalSpots"
+          bindinput="onInput"
+        />
+      </view>
+      
+      <view class="form-item">
+        <view class="form-label">报名费用（元）</view>
+        <input 
+          class="input" 
+          type="number"
+          placeholder="0 为免费活动" 
+          value="{{formData.price}}"
+          data-field="price"
+          bindinput="onInput"
+        />
+      </view>
+    </view>
+    
+    <!-- 报名设置 -->
+    <view class="section">
+      <view class="section-title">报名设置</view>
+      
+      <view class="switch-item">
+        <view class="switch-label">需要审核</view>
+        <switch 
+          checked="{{formData.requireApproval}}" 
+          data-field="requireApproval"
+          bindchange="onSwitchChange"
+        />
+      </view>
+      
+      <view class="switch-item">
+        <view class="switch-label">启用签到</view>
+        <switch 
+          checked="{{formData.checkinEnabled}}" 
+          data-field="checkinEnabled"
+          bindchange="onSwitchChange"
+        />
+      </view>
+    </view>
+    
+    <!-- 提交 -->
+    <view class="submit-section">
+      <button 
+        class="btn btn-primary btn-block btn-lg" 
+        bindtap="submit"
+        disabled="{{submitting}}"
+      >
+        {{submitting ? '提交中...' : '创建活动'}}
+      </button>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,150 @@
+<!-- 管理后台 - Stitch 风格 -->
+<view class="dashboard">
+  <!-- 头部欢迎 -->
+  <view class="header">
+    <view class="welcome">
+      <text class="welcome-text">管理后台</text>
+      <text class="welcome-sub">{{userInfo.nickname || '主办方'}}</text>
+    </view>
+  </view>
+  
+  <!-- 统计卡片 -->
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-num">{{stats.totalActivities}}</text>
+      <text class="stat-label">活动总数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num text-success">{{stats.publishedCount}}</text>
+      <text class="stat-label">已发布</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num text-accent">{{stats.totalRegistrations}}</text>
+      <text class="stat-label">报名总数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num text-warning">{{stats.pendingApproval}}</text>
+      <text class="stat-label">待审核</text>
+    </view>
+  </view>
+  
+  <!-- 功能区 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">我的活动</text>
+      <view class="btn btn-primary btn-sm" bindtap="goToCreate">+ 创建活动</view>
+    </view>
+    
+    <!-- 加载中 -->
+    <view wx:if="{{loading}}" class="loading">
+      <view class="loading-spinner"></view>
+    </view>
+    
+    <!-- 活动列表 -->
+    <view wx:else class="activity-list">
+      <view wx:for="{{activities}}" wx:key="id" class="activity-item">
+        <view class="activity-main" bindtap="viewActivity" data-id="{{item._id}}">
+          <view class="activity-info">
+            <view class="activity-title">{{item.title}}</view>
+            <view class="activity-meta">
+              <text class="status status-{{item.status}}">{{item.status === 'draft' ? '草稿' : item.status === 'published' ? '已发布' : item.status === 'cancelled' ? '已取消' : '已完成'}}</text>
+              <text>📅 {{item.startTime}}</text>
+              <text>👥 {{item.registrationCount}}/{{item.totalSpots}}</text>
+            </view>
+          </view>
+          <text class="arrow">›</text>
+        </view>
+        
+        <!-- 操作按钮 -->
+        <view class="activity-actions">
+          <view wx:if="{{item.status === 'draft'}}" class="action-btn publish" bindtap="publishActivity" data-id="{{item._id}}">
+            发布
+          </view>
+          <view class="action-btn delete" bindtap="deleteActivity" data-id="{{item._id}}">
+            删除
+          </view>
+        </view>
+      </view>
+      
+      <!-- 加载更多 -->
+      <view wx:if="{{loadingMore}}" class="loading-more">
+        <view class="loading-spinner"></view>
+        <text>加载中...</text>
+      </view>
+      
+      <!-- 空状态 -->
+      <view wx:if="{{!loading && activities.length === 0}}" class="empty">
+        <text class="empty-icon">📋</text>
+        <text class="empty-text">暂无活动，点击上方创建</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 详情弹窗 -->
+  <view wx:if="{{showDetailModal}}" class="modal-mask" bindtap="closeDetailModal">
+    <view class="modal" catchtap="true">
+      <view class="modal-header">
+        <text class="modal-title">{{currentActivity.title}}</text>
+        <text class="modal-close" bindtap="closeDetailModal">✕</text>
+      </view>
+      
+      <view class="modal-body">
+        <view class="modal-stats">
+          <view class="modal-stat">
+            <text class="num">{{currentActivity.registrationCount}}</text>
+            <text class="label">报名</text>
+          </view>
+          <view class="modal-stat">
+            <text class="num">{{currentActivity.spotsLeft}}</text>
+            <text class="label">剩余</text>
+          </view>
+          <view class="modal-stat">
+            <text class="num">{{currentActivity.viewCount}}</text>
+            <text class="label">浏览</text>
+          </view>
+        </view>
+        
+        <view class="reg-section">
+          <text class="reg-title">报名名单</text>
+          
+          <view wx:if="{{regLoading}}" class="loading">
+            <view class="loading-spinner"></view>
+          </view>
+          
+          <view wx:elif="{{registrations.length === 0}}" class="empty-small">
+            暂无报名
+          </view>
+          
+          <view wx:else class="reg-list">
+            <view wx:for="{{registrations}}" wx:key="id" class="reg-item">
+              <view class="reg-user">
+                <image class="reg-avatar" src="{{item.user.avatar || '/assets/images/default-avatar.png'}}" />
+                <view class="reg-info">
+                  <text class="reg-name">{{item.user.nickname}}</text>
+                  <text class="reg-phone">{{item.user.phone || '未填写电话'}}</text>
+                </view>
+              </view>
+              <view class="reg-status">
+                <text class="status-badge status-{{item.status}}">
+                  {{item.status === 'pending' ? '待审核' : 
+                    item.status === 'confirmed' ? '已确认' : 
+                    item.status === 'checked-in' ? '已签到' : '已取消'}}
+                </text>
+                
+                <view wx:if="{{item.status === 'pending'}}" class="reg-actions">
+                  <button 
+                    class="btn btn-success btn-sm"
+                    bindtap="approveRegistration"
+                    data-reg-id="{{item._id}}"
+                  >
+                    通过
+                  </button>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
