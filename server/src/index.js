@@ -11,6 +11,7 @@ const registrationRoutes = require('./src/routes/registration');
 const userRoutes = require('./src/routes/user');
 const checkinRoutes = require('./src/routes/checkin');
 const paymentRoutes = require('./src/routes/payment');
+const uploadRoutes = require('./src/routes/upload');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,6 +31,7 @@ app.use('/api/registrations', registrationRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/checkin', checkinRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // 健康检查
 app.get('/api/health', (req, res) => {

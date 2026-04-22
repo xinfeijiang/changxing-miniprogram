@@ -345,4 +345,58 @@ router.post('/:id/registrations/:regId/approve', organizerAuth, async (req, res)
   }
 });
 
+// 导出报名名单
+router.get('/:id/export', organizerAuth, async (req, res) => {
+  try {
+    const activity = await Activity.findOne({
+      _id: req.params.id,
+      organizer: req.userId
+    });
+    
+    if (!activity) {
+      return res.json({ code: 404, message: '活动不存在' });
+    }
+    
+    const registrations = await Registration.find({
+      activity: req.params.id,
+      status: { $ne: 'cancelled' }
+    })
+      .populate('user', 'nickname phone')
+      .lean();
+    
+    const exportService = require('../services/export');
+    const buffer = await exportService.exportRegistrations(activity, registrations);
+    
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(activity.title)}_报名名单.xlsx"`);
+    
+    res.send(buffer);
+  } catch (error) {
+    console.error('导出失败:', error);
+    res.json({ code: 500, message: '导出失败' });
+  }
+});
+
+// 生成分享海报
+router.get('/:id/poster', async (req, res) => {
+  try {
+    const activity = await Activity.findById(req.params.id).lean();
+    
+    if (!activity) {
+      return res.json({ code: 404, message: '活动不存在' });
+    }
+    
+    const posterService = require('../services/poster');
+    const buffer = await posterService.generateActivityPoster(activity, null);
+    
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Content-Disposition', `attachment; filename="${encodeURIComponent(activity.title)}_海报.png"`);
+    
+    res.send(buffer);
+  } catch (error) {
+    console.error('生成海报失败:', error);
+    res.json({ code: 500, message: '生成失败' });
+  }
+});
+
 module.exports = router;
