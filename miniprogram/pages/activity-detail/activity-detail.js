@@ -184,12 +184,29 @@ Page({
     wx.switchTab({ url: '/pages/my-registrations/my-registrations' });
   },
   
-  // 分享
+  // 跳转分享海报页面
+  goToSharePoster() {
+    wx.navigateTo({
+      url: `/pages/share-poster/share-poster?id=${this.data.id}`
+    });
+  },
+
+  // 分享给朋友
   onShareAppMessage() {
     const { activity } = this.data;
     return {
       title: activity.title,
       path: `/pages/activity-detail/activity-detail?id=${activity.id}`,
+      imageUrl: activity.cover
+    };
+  },
+
+  // 分享到朋友圈
+  onShareTimeline() {
+    const { activity } = this.data;
+    return {
+      title: activity.title,
+      query: `id=${activity.id}`,
       imageUrl: activity.cover
     };
   }

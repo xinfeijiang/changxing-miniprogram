@@ -303,3 +303,28 @@
   background: var(--stitch-bg);
   border-top: 1px solid var(--stitch-border);
 }
+
+/* 分享按钮组 */
+.share-buttons {
+  display: flex;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.btn-share {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 16rpx 24rpx;
+  background: var(--stitch-card);
+  border: 1px solid var(--stitch-border);
+  border-radius: var(--radius-md);
+  font-size: 26rpx;
+  color: var(--stitch-text-secondary);
+}
+
+.btn-share .btn-icon {
+  font-size: 28rpx;
+}

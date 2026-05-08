@@ -207,6 +207,18 @@
     
     <!-- 底部操作 -->
     <view class="bottom-bar">
+      <!-- 分享按钮组 -->
+      <view class="share-buttons">
+        <button class="btn btn-share" open-type="share">
+          <text class="btn-icon">📤</text>
+          <text>分享</text>
+        </button>
+        <button class="btn btn-share" bindtap="goToSharePoster">
+          <text class="btn-icon">📸</text>
+          <text>朋友圈</text>
+        </button>
+      </view>
+      
       <button 
         wx:if="{{!registration && activity.spotsLeft > 0}}"
         class="btn btn-primary btn-block" 

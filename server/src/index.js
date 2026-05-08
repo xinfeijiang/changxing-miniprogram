@@ -5,13 +5,14 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 // 导入路由
-const authRoutes = require('./src/routes/auth');
-const activityRoutes = require('./src/routes/activity');
-const registrationRoutes = require('./src/routes/registration');
-const userRoutes = require('./src/routes/user');
-const checkinRoutes = require('./src/routes/checkin');
-const paymentRoutes = require('./src/routes/payment');
-const uploadRoutes = require('./src/routes/upload');
+const authRoutes = require('./routes/auth');
+const activityRoutes = require('./routes/activity');
+const registrationRoutes = require('./routes/registration');
+const userRoutes = require('./routes/user');
+const checkinRoutes = require('./routes/checkin');
+const paymentRoutes = require('./routes/payment');
+const uploadRoutes = require('./routes/upload');
+const wechatRoutes = require('./routes/wechat');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/checkin', checkinRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/wechat', wechatRoutes);
 
 // 健康检查
 app.get('/api/health', (req, res) => {

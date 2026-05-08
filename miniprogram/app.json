@@ -6,7 +6,8 @@
     "pages/registration/registration",
     "pages/my-registrations/my-registrations",
     "pages/dashboard/dashboard",
-    "pages/checkin/checkin"
+    "pages/checkin/checkin",
+    "pages/share-poster/share-poster"
   ],
   "window": {
     "backgroundTextStyle": "light",
