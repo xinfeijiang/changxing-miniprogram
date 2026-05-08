@@ -1,0 +1,56 @@
+<!--分享海报页面-->
+<view class="container">
+  <!-- 海报展示区域 -->
+  <view class="poster-wrapper">
+    <canvas 
+      type="2d" 
+      id="poster-canvas" 
+      class="poster-canvas"
+      style="width: 600rpx; height: 900rpx;"
+    ></canvas>
+    
+    <!-- 生成中的遮罩 -->
+    <view class="generating-mask" wx:if="{{generating}}">
+      <view class="loading">
+        <view class="spinner"></view>
+        <text>正在生成海报...</text>
+      </view>
+    </view>
+
+    <!-- 海报图片（生成完成后显示） -->
+    <image 
+      wx:if="{{posterUrl}}" 
+      src="{{posterUrl}}" 
+      mode="widthFix" 
+      class="poster-image"
+    />
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions" wx:if="{{posterUrl && !generating}}">
+    <button class="btn btn-secondary" bindtap="previewPoster" open-type="openShare">
+      <text class="icon">📤</text>
+      发送给朋友
+    </button>
+    
+    <button class="btn btn-primary" bindtap="savePoster" open-type="openShare">
+      <text class="icon">💾</text>
+      保存到相册
+    </button>
+  </view>
+
+  <!-- 提示信息 -->
+  <view class="tips" wx:if="{{posterUrl && !generating}}">
+    <text>保存图片到相册后，可分享到朋友圈</text>
+  </view>
+
+  <!-- 已保存提示 -->
+  <view class="saved-tip" wx:if="{{saved}}">
+    <text>✅ 海报已保存到相册，快去分享到朋友圈吧！</text>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="footer-tip">
+    <text>长按海报可预览大图</text>
+  </view>
+</view>
